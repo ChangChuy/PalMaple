@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://iko7rmprmsf0"]
+
+[ext_resource type="PackedScene" uid="uid://qen4em3u1xa5" path="res://player.tscn" id="1_875ng"]
+[ext_resource type="Script" path="res://main_scene_for_happyboo_survivor.gd" id="1_wsrh1"]
+[ext_resource type="PackedScene" uid="uid://csoehyrdnv428" path="res://pine_tree.tscn" id="2_3pv4o"]
+[ext_resource type="PackedScene" uid="uid://bp0xrblk1wvrb" path="res://HUD.tscn" id="4_kkfea"]
+
+[sub_resource type="Curve2D" id="Curve2D_0g4ac"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -110, -88, 0, 0, 0, 0, 2002, -85, 0, 0, 0, 0, 1997, 1160, 0, 0, 0, 0, -112, 1162, 0, 0, 0, 0, -110, -88)
+}
+point_count = 5
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_wsrh1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -30
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1920.0
+offset_bottom = 1077.0
+
+[node name="Player" parent="." instance=ExtResource("1_875ng")]
+unique_name_in_owner = true
+position = Vector2(956, 564)
+
+[node name="Path2D" type="Path2D" parent="Player"]
+position = Vector2(-955.75, -564.423)
+rotation = 0.000442559
+scale = Vector2(1, 1)
+curve = SubResource("Curve2D_0g4ac")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(2000.01, 410.167)
+rotation = 1.57481
+progress = 2607.17
+
+[node name="PineTree" parent="." instance=ExtResource("2_3pv4o")]
+position = Vector2(393, 674)
+
+[node name="PineTree2" parent="." instance=ExtResource("2_3pv4o")]
+position = Vector2(1276, 871)
+
+[node name="PineTree3" parent="." instance=ExtResource("2_3pv4o")]
+position = Vector2(823, 907)
+
+[node name="PineTree4" parent="." instance=ExtResource("2_3pv4o")]
+position = Vector2(1624, 429)
+
+[node name="PineTree5" parent="." instance=ExtResource("2_3pv4o")]
+position = Vector2(554, 402)
+
+[node name="PineTree6" parent="." instance=ExtResource("2_3pv4o")]
+position = Vector2(1276, 315)
+
+[node name="PineTree7" parent="." instance=ExtResource("2_3pv4o")]
+position = Vector2(838, 291)
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="HUD" parent="." instance=ExtResource("4_kkfea")]
+unique_name_in_owner = true
+
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
